@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rock Paper Scissors</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main class="game-container">
+      <header class="scoreboard">
+        <div class="score-card">
+          <span class="score-label">Player</span>
+          <span class="score-number" id="player-score">0</span>
+        </div>
+        <div class="vs-divider">VS</div>
+        <div class="score-card">
+          <span class="score-label">Computer</span>
+          <span class="score-number" id="computer-score">0</span>
+        </div>
+      </header>
+
+      <section class="display-arena">
+        <div class="choice-preview">
+          <div class="preview-box" id="player-preview">?</div>
+          <p class="preview-label">Your Choice</p>
+        </div>
+        <div class="choice-preview">
+          <div class="preview-box" id="computer-preview">?</div>
+          <p class="preview-label">Computer's Choice</p>
+        </div>
+      </section>
+
+      <div class="announcement-bar">
+        <h2 id="status-message">Choose your weapon!</h2>
+      </div>
+
+      <footer class="action-grid">
+        <button class="weapon-btn" data-weapon="rock">
+          <img src="images/rock.png" alt="Rock" />
+          <span>Rock (R)</span>
+        </button>
+        <button class="weapon-btn" data-weapon="paper">
+          <img src="images/paper.png" alt="Paper" />
+          <span>Paper (P)</span>
+        </button>
+        <button class="weapon-btn" data-weapon="scissors">
+          <img src="images/scissors.png" alt="Scissors" />
+          <span>Scissors (S)</span>
+        </button>
+      </footer>
+    </main>
+  </body>
+</html>
