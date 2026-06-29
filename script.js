@@ -4,6 +4,7 @@ const playerPreview = document.getElementById("player-preview");
 const computerPreview = document.getElementById("computer-preview");
 const statusMessage = document.getElementById("status-message");
 const announcementBar = document.querySelector(".announcement-bar");
+const displayArena = document.querySelector(".display-arena");
 const weaponButtons = document.querySelectorAll(".weapon-btn");
 
 let playerScore = 0;
@@ -16,37 +17,51 @@ const weapons = {
 };
 
 const runGameLogic = (playerChoice) => {
-  const choices = Object.keys(weapons);
-  const computerChoice = choices[Math.floor(Math.random() * choices.length)];
+  statusMessage.textContent = "Rock... Paper... Scissors!";
+  announcementBar.className = "announcement-bar";
+  
+  playerPreview.innerHTML = `<img src="images/rock.png" alt="Rock">`;
+  computerPreview.innerHTML = `<img src="images/rock.png" alt="Rock">`;
+  
+  displayArena.classList.add("shaking");
 
-  playerPreview.innerHTML = `<img src="${weapons[playerChoice].image}" alt="${playerChoice}">`;
-  computerPreview.innerHTML = `<img src="${weapons[computerChoice].image}" alt="${computerChoice}">`;
+  setTimeout(() => {
+    displayArena.classList.remove("shaking");
 
-  announcementBar.className = "announcement-bar"; 
+    const choices = Object.keys(weapons);
+    const computerChoice = choices[Math.floor(Math.random() * choices.length)];
 
-  if (playerChoice === computerChoice) {
-    statusMessage.textContent = `It's a draw! Both chose ${playerChoice}.`;
-    announcementBar.classList.add("draw");
-  } else if (weapons[playerChoice].beats === computerChoice) {
-    statusMessage.textContent = `You win! ${playerChoice} beats ${computerChoice}.`;
-    announcementBar.classList.add("win");
-    playerScore++;
-    playerScoreEl.textContent = playerScore;
-  } else {
-    statusMessage.textContent = `You lose! ${computerChoice} beats ${playerChoice}.`;
-    announcementBar.classList.add("lose");
-    computerScore++;
-    computerScoreEl.textContent = computerScore;
-  }
+    playerPreview.innerHTML = `<img src="${weapons[playerChoice].image}" alt="${playerChoice}">`;
+    computerPreview.innerHTML = `<img src="${weapons[computerChoice].image}" alt="${computerChoice}">`;
+
+    if (playerChoice === computerChoice) {
+      statusMessage.textContent = `It's a draw! Both chose ${playerChoice}.`;
+      announcementBar.classList.add("draw");
+    } else if (weapons[playerChoice].beats === computerChoice) {
+      statusMessage.textContent = `You win! ${playerChoice} beats ${computerChoice}.`;
+      announcementBar.classList.add("win");
+      playerScore++;
+      playerScoreEl.textContent = playerScore;
+    } else {
+      statusMessage.textContent = `You lose! ${computerChoice} beats ${playerChoice}.`;
+      announcementBar.classList.add("lose");
+      computerScore++;
+      computerScoreEl.textContent = computerScore;
+    }
+  }, 700); 
 };
 
 weaponButtons.forEach((btn) => {
   btn.addEventListener("click", () => {
-    runGameLogic(btn.dataset.weapon);
+    if (!displayArena.classList.contains("shaking")) {
+      runGameLogic(btn.dataset.weapon);
+    }
   });
 });
 
 window.addEventListener("keydown", (e) => {
+  if (displayArena.classList.contains("shaking")) return;
+  
   const key = e.key.toLowerCase();
   if (key === "r") runGameLogic("rock");
   if (key === "p") runGameLogic("paper");
